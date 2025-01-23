@@ -1,8 +1,9 @@
 package ling_test
 
 import (
-	"ling"
 	"testing"
+
+	ling "github.com/samuelren97/LinG"
 )
 
 func createNewList(nbElements int) *ling.ArrayList[int] {
