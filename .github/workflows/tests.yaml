@@ -13,3 +13,16 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ">=1.23.0"
+      
+      - name: Check gofmt
+        shell: bash
+        run: |
+          gofmt -l . > fmt
+          if [ $(stat -c %s fmt) -gt 0 ]; then
+            exit 1
+          fi
+
+      - name: Go tests
+        shell: bash
+        run: |
+          go test
