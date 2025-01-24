@@ -263,3 +263,14 @@ func TestReduce_ConcatStringWithNotEmptyInitializer(t *testing.T) {
 		t.Errorf("wanted: %s, got: %s", wanted, got)
 	}
 }
+
+func TestWhere_OneResult(t *testing.T) {
+	list := createNewList(3)
+	wanted := [1]int{1}
+
+	got := list.Where(func(i int) bool {
+		return i == 1
+	})
+
+	validateList(wanted[:], got, t)
+}

@@ -24,7 +24,11 @@ func (l *ArrayList[T]) Get(index int) T {
 
 func (l *ArrayList[T]) Push(element T) {
 	if l.count == l.capacity {
-		nData := make([]T, l.capacity*2)
+		capacity := 1
+		if l.capacity > 0 {
+			capacity = l.capacity * 2
+		}
+		nData := make([]T, capacity)
 		copy(nData, l.data)
 		l.data = nData
 	}
@@ -86,15 +90,30 @@ func (l *ArrayList[T]) Sort(predicate func(T, T) bool) {
 }
 
 func (l *ArrayList[T]) ToSorted(predicate func(T, T) bool) *ArrayList[T] {
-	arr := make([]T, len(l.data))
-	copy(arr, l.data)
 	list := &ArrayList[T]{
-		count:    len(arr),
-		capacity: len(arr),
-		data:     arr,
+		count:    len(l.data),
+		capacity: len(l.data),
+		data:     make([]T, len(l.data)),
 	}
+	copy(list.data, l.data)
 
 	list.Sort(predicate)
+	return list
+}
+
+func (l *ArrayList[T]) Where(predicate func(T) bool) *ArrayList[T] {
+	list := &ArrayList[T]{
+		count:    0,
+		capacity: 0,
+		data:     make([]T, 0),
+	}
+
+	for _, v := range l.data {
+		if predicate(v) {
+			list.Push(v)
+		}
+	}
+
 	return list
 }
 
