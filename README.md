@@ -1,2 +1,2 @@
 # LinG
-A package that weirdly resembles LinQ
+A package that weirdly resembles Linq
